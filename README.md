@@ -1,2 +1,2 @@
-# todo-app-
+# todo-app
 pure javascript todo app
