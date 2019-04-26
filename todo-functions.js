@@ -39,6 +39,16 @@ const renderTodos = function(todos, filters){
     });
 }
 
+//removeing an todo
+const removeTode = function(id){
+    const todoIndex = todos.findIndex(function(todo){
+        return todo.id === id
+    })
+    if (todoIndex >= 0 ){
+        todos.splice(todoIndex, 1)
+    }
+}
+
 // Get the DOM elements for an individual note
 const generateTodoDOM = function(todo){
     const todoDiv = document.createElement('div')
@@ -56,6 +66,11 @@ const generateTodoDOM = function(todo){
 
     //set button content 
     button.textContent = 'x'
+    button.addEventListener('click', function(){
+        removeTode(todo.id)
+        saveTodos(todos)
+        renderTodos(todos, filters)
+    })
     todoDiv.appendChild(button)
     return todoDiv
 }
@@ -66,7 +81,6 @@ const generateSummaryDOM = function(incompleteTodo){
     summary.textContent = `You have ${incompleteTodo.length} left`
     return summary
 }
-
 
 // ID generation function
 const uuid = function makeid(length) {
