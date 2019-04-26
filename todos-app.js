@@ -15,6 +15,7 @@ document.querySelector('#search-text').addEventListener('input', e => {
 document.querySelector('#new-todo').addEventListener('submit', e => {
     e.preventDefault()
     todos.push({
+        id: uuid(23),
         text: e.target.elements.name.value,
         completed: false
     })
