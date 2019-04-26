@@ -30,9 +30,7 @@ const renderTodos = function(todos, filters){
     })
 
     document.querySelector('#todo').innerHTML = ''
-    
     document.querySelector('#todo').appendChild(generateSummaryDOM(incompleteTodo))
-
 
     filterTodo.forEach(todo => {
         document.querySelector('#todo').appendChild(generateTodoDOM(todo))
@@ -49,6 +47,18 @@ const removeTode = function(id){
     }
 }
 
+//toggle completed todo
+const toggleTodo = function(id){
+    const todoIndex = todos.findIndex(function(todo){
+        return todo.id === id
+    })
+
+    if (todoIndex !== undefined){
+        todo.completed = !todo.completed
+    }
+    console.log("am doing my job");
+    
+}
 // Get the DOM elements for an individual note
 const generateTodoDOM = function(todo){
     const todoDiv = document.createElement('div')
@@ -58,7 +68,13 @@ const generateTodoDOM = function(todo){
 
     //Set checkbox attribute and add to the div
     checkbox.setAttribute('type', 'checkbox')
+    checkbox.checked = todo.completed
     todoDiv.appendChild(checkbox)
+    checkbox.addEventListener('change', function () {
+        toggleTodo(todo.id)
+        saveTodos(todos)
+        renderTodos(todos, filters)
+    })
 
     //set span content and append to the div
     span.textContent = todo.text
@@ -66,11 +82,11 @@ const generateTodoDOM = function(todo){
 
     //set button content 
     button.textContent = 'x'
-    button.addEventListener('click', function(){
-        removeTode(todo.id)
-        saveTodos(todos)
-        renderTodos(todos, filters)
-    })
+    button.addEventListener('click', function(id){
+       removeTode(todo.id)
+       saveTodos(todos)
+       renderTodos(todos, filters)
+   })
     todoDiv.appendChild(button)
     return todoDiv
 }
@@ -93,3 +109,6 @@ const uuid = function makeid(length) {
     return result;
  }
  
+
+ 
+
